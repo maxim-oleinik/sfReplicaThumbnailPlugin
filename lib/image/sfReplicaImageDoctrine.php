@@ -1,23 +1,30 @@
 <?php
 
 /**
- * Исходное изображение для генерации превью
- *
- * Загружает картинку из БД
+ * Doctrine image proxy
  */
 class sfReplicaImageDoctrine extends Replica_ImageProxy
 {
-    private
+    /**
+     * Record field with binary data
+     */
+    protected $_field = 'bin';
+
+    /**
+     * Record data
+     */
+    protected
         $_id,
         $_model;
 
 
     /**
-     * Конструктор
+     * Construct
      *
-     * @param  int $imageId - ID изображения в БД
+     * @param string $model   - Model name
+     * @param int    $imageId - Record ID
      */
-    public function __construct($imageId, $model)
+    public function __construct($model, $imageId)
     {
         $this->_id    = (int) $imageId;
         $this->_model = $model;
@@ -36,17 +43,16 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy
 
 
     /**
-     * Получить изображение из БД и создать GD-ресурс
+     * Load image
      *
-     * @return GD-resource
+     * @param  Replica_ImageAbstract $image
+     * @return void
      */
-    protected function _createImage()
+    protected function _loadImage(Replica_ImageAbstract $image)
     {
-        $image = new Replica_ImageGd;
-
         $src = Doctrine::getTable($this->_model)->find($this->_id);
         if ($src) {
-            $image->loadFromString($src->getBin());
+            $image->loadFromString($src->get($this->_field));
         }
 
         return $image;
