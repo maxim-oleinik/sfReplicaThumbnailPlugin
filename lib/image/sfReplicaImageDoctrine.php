@@ -38,7 +38,9 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy
      */
     public function getUid()
     {
-        return $this->_model . '::' . $this->_id;
+        if ($this->_id) {
+            return $this->_model . '::' . $this->_id;
+        }
     }
 
 

@@ -56,6 +56,16 @@ class sfReplicaImageDoctrineTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Empty UID if no ID
+     */
+    public function testEmptyUid()
+    {
+        $img = new sfReplicaImageDoctrine('Image', false);
+        $this->assertNull($img->getUid());
+    }
+
+
+    /**
      * Get Image
      */
     public function testGetImage()
