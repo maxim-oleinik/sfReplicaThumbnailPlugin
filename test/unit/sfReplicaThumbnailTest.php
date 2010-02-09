@@ -1,17 +1,9 @@
 <?php
+require_once(dirname(__FILE__) . '/../bootstrap.php');
 
-class sfReplicaThumbnailTest extends PHPUnit_Framework_TestCase
+
+class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
 {
-    /**
-     * TearDown
-     */
-    public function tearDown()
-    {
-        sfConfig::clear();
-        Replica::removeAll();
-    }
-
-
     /**
      * Get config
      */

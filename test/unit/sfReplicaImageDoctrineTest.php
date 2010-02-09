@@ -43,7 +43,7 @@ class sfReplicaImageDoctrineTest_ImageProxy extends sfReplicaImageDoctrine
 /**
  * Test
  */
-class sfReplicaImageDoctrineTest extends PHPUnit_Framework_TestCase
+class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
 {
     /**
      * Get UID

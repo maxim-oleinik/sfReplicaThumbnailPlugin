@@ -1,14 +1,30 @@
 <?php
 
-
-    function thumbnail($type, $imageId, $model)
+    /**
+     * Get thumbnail path
+     *
+     * @param  string                      $type
+     * @param  Replica_ImageProxy_Abstract $proxy
+     * @return string - path to thumbnail
+     */
+    function thumbnail($type, Replica_ImageProxy_Abstract $proxy)
     {
-        if ($imageId) {
-            $path = sfConfig::get('app_thumbnail_dir') . '/' . Replica_Macro_Cache::get($type, new myImageFromDababase($imageId, $model));
+        $config = sfReplicaThumbnail::getConfig($type);
 
-#        } else if ($default = sfConfig::get('app_default_thumbnail_'.$type)) {
-#            $path = $default;
+        // Has image
+        if ($proxy->getUid()) {
 
+            sfReplicaThumbnail::loadMacro($type, $config['macro']);
+
+            // TODO: Catch exeption if src not found
+            $path = sfConfig::get('app_thumbnail_dir') . '/'
+                  . Replica::cache()->get($type, $proxy, $config['mimetype']);
+
+        // Default image
+        } else if (isset($config['default'])) {
+            $path = $config['default'];
+
+        // No image
         } else {
             return;
         }
