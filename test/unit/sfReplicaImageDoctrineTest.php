@@ -73,7 +73,7 @@ class sfReplicaImageDoctrineTest extends PHPUnit_Framework_TestCase
         $proxy = new sfReplicaImageDoctrineTest_ImageProxy('sfReplicaImageDoctrineTest_Model', 12);
         $image = $proxy->getImage();
 
-        $this->assertType('Replica_ImageGd', $image);
+        $this->assertType('Replica_Image_Gd', $image);
         $this->assertTrue($image->isLoaded(), 'Image is loaded');
     }
 

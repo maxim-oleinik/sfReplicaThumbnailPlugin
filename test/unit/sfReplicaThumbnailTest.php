@@ -100,7 +100,7 @@ class sfReplicaThumbnailTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Replica::hasMacro('logo'), 'Registry is empty');
 
         // first
-        $config = array('Replica_Macro_Fake' => array());
+        $config = array('Replica_Macro_Null' => array());
         sfReplicaThumbnail::loadMacro('logo', $config);
 
         // second
@@ -108,7 +108,7 @@ class sfReplicaThumbnailTest extends PHPUnit_Framework_TestCase
         sfReplicaThumbnail::loadMacro('logo', $config);
 
         $this->assertTrue(Replica::hasMacro('logo'), 'Macro is initialized');
-        $this->assertType('Replica_Macro_Fake', $macro = Replica::getMacro('logo'));
+        $this->assertType('Replica_Macro_Null', $macro = Replica::getMacro('logo'));
     }
 
 }

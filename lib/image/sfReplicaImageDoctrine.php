@@ -3,7 +3,7 @@
 /**
  * Doctrine image proxy
  */
-class sfReplicaImageDoctrine extends Replica_ImageProxy
+class sfReplicaImageDoctrine extends Replica_ImageProxy_Abstract
 {
     /**
      * Record field with binary data
@@ -47,10 +47,10 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy
     /**
      * Load image
      *
-     * @param  Replica_ImageAbstract $image
+     * @param  Replica_Image_Abstract $image
      * @return void
      */
-    protected function _loadImage(Replica_ImageAbstract $image)
+    protected function _loadImage(Replica_Image_Abstract $image)
     {
         $src = Doctrine::getTable($this->_model)->find($this->_id);
         if ($src) {
