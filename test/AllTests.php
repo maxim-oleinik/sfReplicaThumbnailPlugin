@@ -15,6 +15,7 @@ class sfReplicaThumbnailPlugin_AllTests extends PHPUnit_Framework_TestSuite
 
         // Replica tests
         $suite->addTestFile(DIR_SF_REPLICA . '/lib/vendor/Replica/test/AllTests.php');
+        PHPUnit_Util_Filter::removeDirectoryFromWhitelist(DIR_SF_REPLICA . '/lib/vendor');
 
         // Plugin tests
         $runner = new PHPUnit_TextUI_TestRunner(new PHPUnit_Runner_StandardTestSuiteLoader);

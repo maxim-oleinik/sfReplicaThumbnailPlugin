@@ -21,3 +21,4 @@ Doctrine_Manager::connection('mysql://username:password@localhost/test');
 
 // Test
 require_once DIR_SF_REPLICA . '/test/sfReplicaThumbnailTestCase.php';
+PHPUnit_Util_Filter::addDirectoryToWhitelist(DIR_SF_REPLICA . '/lib');
