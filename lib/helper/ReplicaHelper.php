@@ -1,13 +1,16 @@
 <?php
+require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
+
 
     /**
      * Get thumbnail path
      *
      * @param  string                      $type
      * @param  Replica_ImageProxy_Abstract $proxy
+     * @param  array                       $attributes - Additional tag attributes
      * @return string - relative path to thumbnail
      */
-    function thumbnail($type, Replica_ImageProxy_Abstract $proxy)
+    function thumbnail($type, Replica_ImageProxy_Abstract $proxy, array $attributes = array())
     {
         $config = sfReplicaThumbnail::getConfig($type);
 
@@ -33,5 +36,11 @@
             return;
         }
 
-        return sprintf('<img src="%s" alt="" />', $path);
+
+        // Render tag
+        $attributes['src'] = $path;
+        if (!isset($attributes['alt'])) {
+            $attributes['alt'] = '';
+        }
+        return tag('img', $attributes);
     }

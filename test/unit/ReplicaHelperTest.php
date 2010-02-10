@@ -9,15 +9,28 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
      */
     public function setUp()
     {
-        $conf = array(
-            'logo' => array(
-                'macro' => array('Replica_Macro_Null' => array()),
-            ),
-        );
-        sfConfig::set('app_thumbnail_types', $conf);
-        sfConfig::set('app_thumbnail_dir', '/upload');
+        parent::setUp();
 
+        sfConfig::set('app_thumbnail_dir', '/upload');
         Replica::setCacheManager(new Replica_Macro_CacheManager('/save/dir'));
+        $this->_setConf('logo');
+    }
+
+
+    /**
+     * Set plugin config
+     *
+     * @param  string $type - thumbnail name
+     * @param  array  $data - thumbnail conf
+     * @return void
+     */
+    private function _setConf($type, array $data = array())
+    {
+        $default = array(
+            'macro' => array('Replica_Macro_Null' => array()),
+        );
+        $data = array_merge($default, $data);
+        sfConfig::set('app_thumbnail_types', array($type => $data));
     }
 
 
@@ -35,13 +48,9 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
      */
     public function testDefaultImage()
     {
-        $conf = array(
-            'logo' => array(
-                'default' => $path = '/path/to/default/image',
-                'macro' => array('Replica_Macro_Null' => array()),
-            ),
-        );
-        sfConfig::set('app_thumbnail_types', $conf);
+        $this->_setConf('logo', array(
+            'default' => $path = '/path/to/default/image',
+        ));
 
         $expected = sprintf('<img src="%s" alt="" />', $path);
         $this->assertEquals($expected, thumbnail('logo', new Replica_ImageProxy_FromFile('')));
@@ -72,4 +81,24 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
         $this->assertNull(thumbnail('logo', new Replica_ImageProxy_FromFile('/unknown/file')));
     }
 
+
+    /**
+     * Tag attributes
+     */
+    public function testTagAttributes()
+    {
+        $this->_setConf('logo', array(
+            'default' => $path = '/path/to/default/image',
+        ));
+        $attr = array(
+            'alt'     => 'Image alt',
+            'class'   => 'myClass',
+            'title'   => 'Image title',
+        );
+
+        $expected = sprintf('<img alt="%s" class="%s" title="%s" src="%s" />',
+            $attr['alt'], $attr['class'], $attr['title'], $path
+        );
+        $this->assertEquals($expected, thumbnail('logo', new Replica_ImageProxy_FromFile(''), $attr));
+    }
 }
