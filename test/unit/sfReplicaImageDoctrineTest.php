@@ -74,7 +74,7 @@ class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
         $image = $proxy->getImage();
 
         $this->assertType('Replica_Image_Gd', $image);
-        $this->assertTrue($image->isLoaded(), 'Image is loaded');
+        $this->assertTrue($image->isInitialized(), 'Image is loaded');
     }
 
 }

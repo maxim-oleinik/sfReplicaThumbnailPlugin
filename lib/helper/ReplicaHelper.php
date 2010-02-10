@@ -5,7 +5,7 @@
      *
      * @param  string                      $type
      * @param  Replica_ImageProxy_Abstract $proxy
-     * @return string - path to thumbnail
+     * @return string - relative path to thumbnail
      */
     function thumbnail($type, Replica_ImageProxy_Abstract $proxy)
     {
@@ -16,9 +16,13 @@
 
             sfReplicaThumbnail::loadMacro($type, $config['macro']);
 
-            // TODO: Catch exeption if src not found
-            $path = sfConfig::get('app_thumbnail_dir') . '/'
-                  . Replica::cache()->get($type, $proxy, $config['mimetype']);
+            // If image not found return null
+            try {
+                $path = sfConfig::get('app_thumbnail_dir') . '/'
+                      . Replica::cache()->get($type, $proxy, $config['mimetype']);
+            } catch (Replica_Exception_ImageNotInitialized $e) {
+                return;
+            }
 
         // Default image
         } else if (isset($config['default'])) {

@@ -9,6 +9,7 @@ class sfReplicaThumbnailTestCase extends PHPUnit_Framework_TestCase
     {
         sfConfig::clear();
         Replica::removeAll();
+        Replica::setCacheManager(null);
     }
 
 }

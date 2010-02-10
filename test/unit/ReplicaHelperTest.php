@@ -5,9 +5,9 @@ require_once(dirname(__FILE__) . '/../bootstrap.php');
 class ReplicaHelperTest extends sfReplicaThumbnailTestCase
 {
     /**
-     * No src image
+     * SetUp
      */
-    public function testNoImage()
+    public function setUp()
     {
         $conf = array(
             'logo' => array(
@@ -15,13 +15,23 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
             ),
         );
         sfConfig::set('app_thumbnail_types', $conf);
+        sfConfig::set('app_thumbnail_dir', '/upload');
 
+        Replica::setCacheManager(new Replica_Macro_CacheManager('/save/dir'));
+    }
+
+
+    /**
+     * No src image
+     */
+    public function testNoImage()
+    {
         $this->assertNull(thumbnail('logo', new Replica_ImageProxy_FromFile('')));
     }
 
 
     /**
-     * Default image if no src image
+     * Return default image if no src image
      */
     public function testDefaultImage()
     {
@@ -43,14 +53,6 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
      */
     public function testGetTumbnail()
     {
-        $conf = array(
-            'logo' => array(
-                'macro' => array('Replica_Macro_Null' => array()),
-            ),
-        );
-        sfConfig::set('app_thumbnail_types', $conf);
-        sfConfig::set('app_thumbnail_dir', '/upload');
-
         $cache = $this->getMock('Replica_Macro_CacheManager', array('get'), array('/save/dir'));
         $cache->expects($this->once())
               ->method('get')
@@ -61,5 +63,13 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
         $this->assertEquals($expected, thumbnail('logo', new Replica_ImageProxy_FromFile('/some/file')));
     }
 
+
+    /**
+     * Failed to load image
+     */
+    public function testFailedToLoadImage()
+    {
+        $this->assertNull(thumbnail('logo', new Replica_ImageProxy_FromFile('/unknown/file')));
+    }
 
 }
