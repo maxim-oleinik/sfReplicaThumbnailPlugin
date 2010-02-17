@@ -15,19 +15,41 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy_Abstract
      */
     protected
         $_id,
-        $_model;
+        $_model,
+        $_record;
 
 
     /**
      * Construct
      *
-     * @param string $model   - Model name
-     * @param int    $imageId - Record ID
+     * Usage:
+     *   1. new sfReplicaImageDoctrine("Article", 12)
+     *   2. new sfReplicaImageDoctrine($articleRecord)
+     *
+     * @param string|Doctrine_Record $model   - Model name
+     * @param int                    $imageId - Record ID
      */
-    public function __construct($model, $imageId)
+    public function __construct($model, $imageId = null)
     {
-        $this->_id    = (int) $imageId;
-        $this->_model = $model;
+        if (is_object($model)) {
+
+            if ($model instanceof Doctrine_Record) {
+                $this->_record = $model;
+
+                $key = $this->_record->getTable()->getIdentifier();
+                $this->_id    = (int) $this->_record->get($key);
+
+                $this->_model = get_class($this->_record);
+
+            } else {
+                $class = get_class($model);
+                throw new InvalidArgumentException(__METHOD__.": Expected instance of `Doctrine_Record`, got `{$class}`");
+            }
+
+        } else {
+            $this->_id    = (int) $imageId;
+            $this->_model = (string) $model;
+        }
     }
 
 
@@ -45,6 +67,20 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy_Abstract
 
 
     /**
+     * Get record
+     *
+     * @return Doctrine_Record|false
+     */
+    public function getRecord()
+    {
+        if ($this->_id && null === $this->_record) {
+            $this->_record = Doctrine::getTable($this->_model)->find($this->_id);
+        }
+        return $this->_record;
+    }
+
+
+    /**
      * Load image
      *
      * @param  Replica_Image_Abstract $image
@@ -52,9 +88,9 @@ class sfReplicaImageDoctrine extends Replica_ImageProxy_Abstract
      */
     protected function _loadImage(Replica_Image_Abstract $image)
     {
-        $src = Doctrine::getTable($this->_model)->find($this->_id);
-        if ($src) {
-            $image->loadFromString($src->get($this->_field));
+        $record = $this->getRecord();
+        if ($record) {
+            $image->loadFromString($record->get($this->_field));
         }
 
         return $image;
