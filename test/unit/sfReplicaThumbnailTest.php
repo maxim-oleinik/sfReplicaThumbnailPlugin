@@ -1,7 +1,11 @@
 <?php
 require_once(dirname(__FILE__) . '/../bootstrap.php');
 
-
+/**
+ * sfReplicaThumbnail test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
 {
     /**

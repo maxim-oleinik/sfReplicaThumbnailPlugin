@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Base plugin TestCase
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class sfReplicaThumbnailTestCase extends PHPUnit_Framework_TestCase
 {
     protected $backupGlobals = false;

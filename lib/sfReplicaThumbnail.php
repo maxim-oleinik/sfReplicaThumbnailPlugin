@@ -2,6 +2,9 @@
 
 /**
  * Base plugin class
+ *
+ * @package    sfReplicaThumbnail
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class sfReplicaThumbnail
 {

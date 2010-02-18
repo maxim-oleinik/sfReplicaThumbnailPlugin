@@ -2,6 +2,8 @@
 
 /**
  * sfReplicaThumbnailPluginConfiguration
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class sfReplicaThumbnailPluginConfiguration extends sfPluginConfiguration
 {

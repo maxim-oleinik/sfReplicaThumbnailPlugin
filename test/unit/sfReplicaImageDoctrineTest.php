@@ -46,7 +46,9 @@ class sfReplicaImageDoctrineTest_ImageProxy extends sfReplicaImageDoctrine
 
 
 /**
- * Test
+ * sfReplicaImageDoctrine test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
 {

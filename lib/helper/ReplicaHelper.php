@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Helper
+ *
+ * @package    sfReplicaThumbnail
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
 
 

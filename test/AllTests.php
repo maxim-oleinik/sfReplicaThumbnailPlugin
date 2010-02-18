@@ -3,6 +3,8 @@ require_once(dirname(__FILE__) . '/bootstrap.php');
 
 /**
  * All Tests
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class sfReplicaThumbnailPlugin_AllTests extends PHPUnit_Framework_TestSuite
 {

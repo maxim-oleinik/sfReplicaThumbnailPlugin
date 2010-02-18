@@ -2,6 +2,9 @@
 
 /**
  * Doctrine image proxy
+ *
+ * @package    sfReplicaThumbnail
+ * @author     Maxim Oleinik <maxim.oleinik@gmail.com>
  */
 class sfReplicaImageDoctrine extends Replica_ImageProxy_Abstract
 {

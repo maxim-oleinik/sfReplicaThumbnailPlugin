@@ -2,6 +2,11 @@
 require_once(dirname(__FILE__) . '/../bootstrap.php');
 
 
+/**
+ * Helper test
+ *
+ * @author  Maxim Oleinik <maxim.oleinik@gmail.com>
+ */
 class ReplicaHelperTest extends sfReplicaThumbnailTestCase
 {
     /**
