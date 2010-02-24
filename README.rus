@@ -16,20 +16,19 @@ sfReplicaThumbnail
  * Download
     Сохраните файлы в директории проекта plugins/
 
- * Установка из Git-репозитария
-    [cli]
+ * Установка из Git-репозитария:
     cd /my/project/dir
     git clone git://github.com/maxim-oleinik/sfReplicaThumbnailPlugin.git plugins/sfReplicaThumbnailPlugin
     cd plugins/sfReplicaThumbnailPlugin
     git submodule update --init
 
- * Установка как submodule для Git-репозитария
+ * Установка как submodule для Git-репозитария:
     cd /my/project/dir
     git submodule add git://github.com/maxim-oleinik/sfReplicaThumbnailPlugin.git plugins/sfReplicaThumbnailPlugin
     cd plugins/sfReplicaThumbnailPlugin
     git submodule update --init
 
- * Запуск тестов
+ * Запуск тестов:
     cd plugins/sfReplicaThumbnailPlugin
     phpunit test/AllTests.php
 
@@ -81,7 +80,7 @@ sfReplicaThumbnail
 
 
 Если изображение хранится в БД, тогда можно написать свой класс на основе Replica_ImageProxy_Abstract.
-Для Doctrine можно использовать sfReplicaImageDoctrine
+Для Doctrine можно использовать sfReplicaImageDoctrine:
 
     [php]
     echo thumbnail('product_preview', new sfReplicaImageDoctrine($articleImage));
