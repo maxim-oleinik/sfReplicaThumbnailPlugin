@@ -88,6 +88,20 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
 
 
     /**
+     * Exception if source image required
+     */
+    public function testSourceImageRequired()
+    {
+        $this->_setConf('logo', array(
+            'required' => true,
+        ));
+
+        $this->setExpectedException('Replica_Exception_ImageNotInitialized');
+        thumbnail('logo', new Replica_ImageProxy_FromFile('/unknown/file'));
+    }
+
+
+    /**
      * Tag attributes
      */
     public function testTagAttributes()

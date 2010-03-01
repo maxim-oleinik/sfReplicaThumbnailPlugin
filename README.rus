@@ -52,6 +52,7 @@ sfReplicaThumbnail
         types:
           product_thumb:
             default: /images/default/product_thumb.png  # Заглушка, если нет исходного изображения
+            required: true                              # Не проглатывать исключения, если исходное изображение не удалось загрузить
             mimetype: image/png                         # Тип результирующего файла
             macro:
               Replica_Macro_ThumbnailFixed: [40, 40, center, center]

@@ -15,6 +15,7 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
     {
         $expected = array(
             'default'  => null,
+            'required' => true,
             'mimetype' => 'image/png',
             'macro' => array('macro' => array(1,2,3)),
         );
@@ -38,6 +39,7 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
 
         $expected = array_merge(array(
             'default'  => null,
+            'required' => false,
             'mimetype' => 'image/png',
         ), $data);
 

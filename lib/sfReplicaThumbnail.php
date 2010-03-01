@@ -41,6 +41,9 @@ class sfReplicaThumbnail
             $result['default'] = null;
         }
 
+        # Required
+        $result['required'] = !empty($result['required']);
+
         # MimeType
         if (!array_key_exists('mimetype', $result)) {
             $result['mimetype'] = 'image/png';
