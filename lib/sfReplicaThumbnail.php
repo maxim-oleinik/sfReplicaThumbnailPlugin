@@ -60,6 +60,8 @@ class sfReplicaThumbnail
     static public function loadMacro($type, array $config)
     {
         if (!Replica::hasMacro($type)) {
+            $chain = new Replica_Macro_Chain;
+
             foreach ($config as $class => $args) {
                 $reflection = new ReflectionClass($class);
                 if ($args && is_array($args)) {
@@ -67,11 +69,10 @@ class sfReplicaThumbnail
                 } else {
                     $macro = $reflection->newInstance();
                 }
-
-                break; // TODO: chain
+                $chain->add($macro);
             }
 
-            Replica::setMacro($type, $macro);
+            Replica::setMacro($type, $chain);
         }
     }
 

@@ -51,16 +51,35 @@ sfReplicaThumbnail
         # Типы превью
         types:
           product_thumb:
-            default: /images/default/product_thumb.png  # Заглушка
+            default: /images/default/product_thumb.png  # Заглушка, если нет исходного изображения
             mimetype: image/png                         # Тип результирующего файла
             macro:
               Replica_Macro_ThumbnailFixed: [40, 40, center, center]
+              # Сжать пропорционально по любой стороне так,
+              # чтобы полностью соответствовать указанным размерам.
+              # Если после сжатия изображение больше по одной из сторон, например 40x60,
+              # тогда вырезать центральный квадрат 40x40
+              #
+              # Replica_Macro_ThumbnailFixed: [width, heigth, left|center|right, top|center|bottom]
 
           product_preview:
             mimetype: image/jpeg
             macro:
               Replica_Macro_ThumbnailFit: [600, 600]
+              # Сжать пропрорциоально по любой строне так, чтобы итоговое изображение
+              # не превышало указанные размеры
 
+          product_origin:
+            macro:
+              Replica_Macro_Null: []
+              # Ничего не делает, возвращает копию оригинала.
+              # Можно использовать для кеширования на диск оригинальных изображений из БД.
+
+          product_preview_with_logo:
+            macro:
+              Replica_Macro_ThumbnailFit: [600, 600]
+              Replica_Macro_Overlay: [-10, -10, %SF_WEB_DIR%/images/logo.png]
+              # Сжать изображение и наложить логотип в правом нижнем углу со смещением 10px
 
     Подробное описание `macro` можно получить здесь:
     plugins/sfReplicaThumbnailPlugin/lib/vendor/Replica/README

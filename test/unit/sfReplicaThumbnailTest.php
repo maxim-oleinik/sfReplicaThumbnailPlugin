@@ -80,10 +80,35 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
         sfReplicaThumbnail::loadMacro('logo', $config);
 
         $this->assertTrue(Replica::hasMacro('logo'), 'Macro is initialized');
-        $this->assertType('Replica_Macro_ThumbnailFit', $macro = Replica::getMacro('logo'));
+        $this->assertType('Replica_Macro_Chain', $macro = Replica::getMacro('logo'));
         $this->assertEquals(array(
-            'maxWidth'  => $width,
-            'maxHeight' => $height,
+            'Replica_Macro_ThumbnailFit' => array(
+                'maxWidth'  => $width,
+                'maxHeight' => $height,
+            ),
+        ), $macro->getParameters());
+    }
+
+
+    /**
+     * Load macro chain
+     */
+    public function testLoadMacroChain()
+    {
+        $config = array(
+            'Replica_Macro_ThumbnailFit' => array($width=10, $height=20),
+            'Replica_Macro_Null'         => array(),
+        );
+        sfReplicaThumbnail::loadMacro('chain', $config);
+
+        $this->assertTrue(Replica::hasMacro('chain'), 'Macro is initialized');
+        $this->assertType('Replica_Macro_Chain', $macro = Replica::getMacro('chain'));
+        $this->assertEquals(array(
+            'Replica_Macro_ThumbnailFit' => array(
+                'maxWidth'  => $width,
+                'maxHeight' => $height,
+            ),
+            'Replica_Macro_Null' => array(),
         ), $macro->getParameters());
     }
 
@@ -93,18 +118,19 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
      */
     public function testLoadMacroOnce()
     {
-        $this->assertFalse(Replica::hasMacro('logo'), 'Registry is empty');
-
         // first
         $config = array('Replica_Macro_Null' => array());
-        sfReplicaThumbnail::loadMacro('logo', $config);
+        sfReplicaThumbnail::loadMacro('load_once', $config);
 
         // second
         $config = array('Replica_Macro_ThumbnailFit' => array($width=10, $height=20));
-        sfReplicaThumbnail::loadMacro('logo', $config);
+        sfReplicaThumbnail::loadMacro('load_once', $config);
 
-        $this->assertTrue(Replica::hasMacro('logo'), 'Macro is initialized');
-        $this->assertType('Replica_Macro_Null', $macro = Replica::getMacro('logo'));
+        $this->assertTrue(Replica::hasMacro('load_once'), 'Macro is initialized');
+        $this->assertType('Replica_Macro_Chain', $macro = Replica::getMacro('load_once'));
+        $this->assertEquals(array(
+            'Replica_Macro_Null' => array(),
+        ), $macro->getParameters());
     }
 
 }
