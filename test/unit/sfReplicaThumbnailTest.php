@@ -17,6 +17,7 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
             'default'  => null,
             'required' => true,
             'mimetype' => 'image/png',
+            'quality'  => 50,
             'macro' => array('macro' => array(1,2,3)),
         );
 
@@ -41,6 +42,7 @@ class sfReplicaThumbnailTest extends sfReplicaThumbnailTestCase
             'default'  => null,
             'required' => false,
             'mimetype' => 'image/png',
+            'quality'  => null,
         ), $data);
 
 

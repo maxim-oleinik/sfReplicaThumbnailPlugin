@@ -19,6 +19,7 @@ class sfReplicaThumbnail
      *           - macro    => array()
      *           - default  => null
      *           - mimetype => image/png
+     *           - quality  => null|int
      */
     static public function getConfig($type)
     {
@@ -47,6 +48,11 @@ class sfReplicaThumbnail
         # MimeType
         if (!array_key_exists('mimetype', $result)) {
             $result['mimetype'] = 'image/png';
+        }
+
+        # Quality
+        if (!array_key_exists('quality', $result)) {
+            $result['quality'] = null;
         }
 
         return $result;

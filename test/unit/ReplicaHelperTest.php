@@ -67,9 +67,19 @@ class ReplicaHelperTest extends sfReplicaThumbnailTestCase
      */
     public function testGetTumbnail()
     {
+        $this->_setConf('logo', array(
+            'mimetype' => 'image/jpg',
+            'quality'  => 25,
+        ));
+
+        $proxy = new Replica_ImageProxy_FromFile('/some/file');
+        $proxy->setMimeType('image/jpg');
+        $proxy->setQuality(25);
+
         $cache = $this->getMock('Replica_Macro_CacheManager', array('get'), array('/save/dir'));
         $cache->expects($this->once())
               ->method('get')
+              ->with('logo', $proxy)
               ->will($this->returnValue($path = 'path/to/thumbnail'));
         Replica::setCacheManager($cache);
 

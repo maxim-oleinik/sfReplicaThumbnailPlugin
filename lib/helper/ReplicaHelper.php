@@ -28,8 +28,12 @@ require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
 
             // If image not found return null
             try {
-                $path = sfConfig::get('app_thumbnail_dir') . '/'
-                      . Replica::cache()->get($type, $proxy, $config['mimetype']);
+                $proxy->setMimeType($config['mimetype']);
+                if (null !== $config['quality']) {
+                    $proxy->setQuality($config['quality']);
+                }
+                $path = sfConfig::get('app_thumbnail_dir') . '/' . Replica::cache()->get($type, $proxy);
+
             } catch (Replica_Exception_ImageNotInitialized $e) {
                 if ($config['required']) {
                     throw $e;
