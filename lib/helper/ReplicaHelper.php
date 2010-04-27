@@ -10,14 +10,36 @@ require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
 
 
     /**
-     * Get thumbnail path
+     * Get thumbnail image tag
      *
      * @param  string                      $type
      * @param  Replica_ImageProxy_Abstract $proxy
      * @param  array                       $attributes - Additional tag attributes
-     * @return string - relative path to thumbnail
+     * @return null|string                             - Image tag
      */
     function thumbnail($type, Replica_ImageProxy_Abstract $proxy, array $attributes = array())
+    {
+        $path = thumbnail_path($type, $proxy);
+
+        // Render tag
+        if ($path) {
+            $attributes['src'] = $path;
+            if (!isset($attributes['alt'])) {
+                $attributes['alt'] = '';
+            }
+            return tag('img', $attributes);
+        }
+    }
+
+
+    /**
+     * Get thumbnail path
+     *
+     * @param  string                      $type
+     * @param  Replica_ImageProxy_Abstract $proxy
+     * @return null|string                             - Relative path to thumbnail
+     */
+    function thumbnail_path($type, Replica_ImageProxy_Abstract $proxy)
     {
         $config = sfReplicaThumbnail::getConfig($type);
 
@@ -32,7 +54,7 @@ require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
                 if (null !== $config['quality']) {
                     $proxy->setQuality($config['quality']);
                 }
-                $path = sfConfig::get('app_thumbnail_dir') . '/' . Replica::cache()->get($type, $proxy);
+                return sfConfig::get('app_thumbnail_dir') . '/' . Replica::cache()->get($type, $proxy);
 
             } catch (Replica_Exception_ImageNotInitialized $e) {
                 if ($config['required']) {
@@ -43,18 +65,6 @@ require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/TagHelper.php');
 
         // Default image
         } else if (isset($config['default'])) {
-            $path = $config['default'];
-
-        // No image
-        } else {
-            return;
+            return $config['default'];
         }
-
-
-        // Render tag
-        $attributes['src'] = $path;
-        if (!isset($attributes['alt'])) {
-            $attributes['alt'] = '';
-        }
-        return tag('img', $attributes);
     }
