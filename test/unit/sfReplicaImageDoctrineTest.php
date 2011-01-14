@@ -71,7 +71,7 @@ class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
         $this->assertEquals('sfReplicaImageDoctrineTest_Model::12', $img->getUid());
 
         // getRecord
-        $this->assertType('sfReplicaImageDoctrineTest_Model', $record = $img->getRecord());
+        $this->assertInstanceOf('sfReplicaImageDoctrineTest_Model', $record = $img->getRecord());
         $this->assertEquals('find(12)', $record->getTable()->log);
     }
 
@@ -129,7 +129,7 @@ class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
         $proxy = new sfReplicaImageDoctrineTest_ImageProxy('sfReplicaImageDoctrineTest_Model', 12);
         $image = $proxy->getImage();
 
-        $this->assertType('Replica_Image_Gd', $image);
+        $this->assertInstanceOf('Replica_Image_Gd', $image);
         $this->assertTrue($image->isInitialized(), 'Image is loaded');
         $this->assertEquals(16, $image->getWidth(), 'Width');
         $this->assertEquals(14, $image->getHeight(), 'Height');
@@ -151,7 +151,7 @@ class sfReplicaImageDoctrineTest extends sfReplicaThumbnailTestCase
         $this->assertSame($record, $proxy->getRecord());
         $this->assertEquals('', $record->getTable()->log);
 
-        $this->assertType('Replica_Image_Gd', $image);
+        $this->assertInstanceOf('Replica_Image_Gd', $image);
         $this->assertTrue($image->isInitialized(), 'Image is loaded');
         $this->assertEquals(16, $image->getWidth(), 'Width');
         $this->assertEquals(14, $image->getHeight(), 'Height');
